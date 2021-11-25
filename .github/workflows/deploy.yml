@@ -1,0 +1,25 @@
+name: Application deploy
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+    secrets:
+      deploy_host:
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/deploy-production
+        with:
+          service_name: ${{ inputs.name }}
+          service_version: ${{ inputs.version }}
+          deploy_host: ${{ secrets.deploy_host }}

@@ -1,0 +1,21 @@
+name: Deploy production
+description: Deploy application to a production environment
+
+inputs:
+  deploy_host:
+    description: Deploy host with credentials
+    required: true
+  service_name:
+    description: Application name
+    required: true
+  service_version:
+    description: Application version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - run: >
+        curl -L
+        "${{ inputs.deploy_host }}&app_name=${{ inputs.service_name }}&app_version=${{ inputs.service_version }}&cause=Deploy+${{ inputs.service_name }}:${{ inputs.service_version }}"
+      shell: bash
