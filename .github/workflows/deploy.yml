@@ -18,7 +18,7 @@ jobs:
     name: Deploy production
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/deploy-production
+      - uses: anna-money/workflow-deploy/.github/actions/deploy-production@master
         with:
           service_name: ${{ inputs.name }}
           service_version: ${{ inputs.version }}
