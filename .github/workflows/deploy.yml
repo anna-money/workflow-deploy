@@ -9,6 +9,11 @@ on:
       version:
         required: true
         type: string
+      test_only:
+        required: false
+        type: string
+        default: "false"
+        
     secrets:
       deploy_host:
         required: true
@@ -22,4 +27,5 @@ jobs:
         with:
           service_name: ${{ inputs.name }}
           service_version: ${{ inputs.version }}
+          test_only: ${{ inputs.test_only }}
           deploy_host: ${{ secrets.deploy_host }}
