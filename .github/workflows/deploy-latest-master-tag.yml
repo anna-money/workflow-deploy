@@ -28,7 +28,7 @@ jobs:
       version: ${{ steps.service-version.outputs.version }}
 
   deploy:
-    name: Get latest tag
+    name: Deploy latest version
     needs: [ get-version ]
     runs-on: ubuntu-latest
     steps:
