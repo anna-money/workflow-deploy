@@ -1,0 +1,31 @@
+name: Deploy latest master tag
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+
+    secrets:
+      deploy_host:
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: 'master'
+      - name: Get git tag
+        id: service-version
+        run: |
+          echo ::set-output name=version::"$(git describe --tags)"
+      - uses: anna-money/workflow-deploy/.github/actions/deploy-production@master
+        with:
+          service_name: ${{ inputs.name }}
+          service_version: ${{ steps.service-version.version }}
+          deploy_host: ${{ secrets.deploy_host }}
